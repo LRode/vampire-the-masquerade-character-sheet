@@ -1,0 +1,198 @@
+{
+  "name": "Lucien",
+  "chronicle": "",
+  "description": "Pretty boy, wavy blonde hair. Clothing wise, he enjoys a nice white button up and black slacks, or even a suit jacket when he can.",
+  "sire": "Renoir",
+  "clan": "Toreador",
+  "predatorType": {
+    "name": "Siren",
+    "pickedDiscipline": "presence",
+    "pickedSpecialties": [
+      {
+        "skill": "persuasion",
+        "name": "Seduction"
+      }
+    ],
+    "pickedMeritsAndFlaws": []
+  },
+  "ambition": "Worldwide fame, also understand the meaning of mortality",
+  "sect": "",
+  "generation": 13,
+  "desire": "Live it up, enjoy the attention and seduction of being a vampiree",
+  "touchstones": [
+    {
+      "name": "Max P.",
+      "description": "15 year old theatre kid who aspires to act. He reminds Lucien of himself when he was young, so he grew a soft spot for him and lets him \"intern\" part-time at the theatre. Everyone thinks its a bad idea but Lucien keeps him around anyway.",
+      "conviction": "Protect the innocent (children)"
+    },
+    {
+      "name": "Auguste Devereux",
+      "description": "Lucien's father, strict rigid Politician man who Lucien did not get along with. Sent him to a prestigious university where he instead started studying acting, to his father's disapproval. Was effectively disowned by Auguste when he ran off with Renoir (ain't no son of mine gunna be a pansy ass actor kind of deal, you know the drill).",
+      "conviction": "No one decides for me who I am, or what I do"
+    },
+    {
+      "name": "Elaine Devereux",
+      "description": "Mommy Devereux, Lucien and her had a loving relationship growing up. Deeply religious, a bit scared of the flamboyant lifestyle Lucien dreams of. They keep in loose touch still through phone calls. His religious upbringing has led to him struggling with the notion of a God and what's the meaning of all this now that he's a vampire.",
+      "conviction": "TODO - something religious about retaining humanity/mortality"
+    }
+  ],
+  "attributes": {
+    "strength": 2,
+    "charisma": 4,
+    "intelligence": 2,
+    "dexterity": 3,
+    "manipulation": 3,
+    "wits": 3,
+    "stamina": 2,
+    "composure": 2,
+    "resolve": 1
+  },
+  "skills": {
+    "athletics": 2,
+    "brawl": 0,
+    "craft": 0,
+    "drive": 1,
+    "firearms": 0,
+    "melee": 0,
+    "larceny": 0,
+    "stealth": 0,
+    "survival": 0,
+    "animal ken": 0,
+    "etiquette": 2,
+    "insight": 2,
+    "intimidation": 2,
+    "leadership": 2,
+    "performance": 3,
+    "persuasion": 3,
+    "streetwise": 0,
+    "subterfuge": 1,
+    "academics": 3,
+    "awareness": 1,
+    "finance": 1,
+    "investigation": 1,
+    "medicine": 0,
+    "occult": 0,
+    "politics": 0,
+    "science": 1,
+    "technology": 1
+  },
+  "skillSpecialties": [
+    {
+      "skill": "academics",
+      "name": ""
+    },
+    {
+      "skill": "craft",
+      "name": ""
+    },
+    {
+      "skill": "performance",
+      "name": "Acting"
+    },
+    {
+      "skill": "science",
+      "name": ""
+    },
+    {
+      "skill": "persuasion",
+      "name": "seduction"
+    }
+  ],
+  "disciplines": [
+    {
+      "name": "auspex",
+      "dots": 1,
+      "abilities": [
+        {
+          "name": "Heightened Senses",
+          "summary": "your senses become supernaturally sharp; add Auspex rating to perception rolls"
+        }
+      ]
+    },
+    {
+      "name": "presence",
+      "dots": 3,
+      "abilities": [
+        {
+          "name": "Awe",
+          "summary": "become attractive and charismatic; add Presence rating to Persuasion and Performance checks"
+        },
+        {
+          "name": "Lingering Kiss",
+          "summary": "make mortals you feed from love you"
+        },
+        {
+          "name": "Entrancement",
+          "summary": "cause infatuation, making a target do almost anything to remain in your good graces"
+        }
+      ]
+    }
+  ],
+  "bloodPotency": 0,
+  "maxHealth": 0,
+  "willpower": 0,
+  "humanity": 0,
+  "haven": {
+    "name": "Theatre",
+    "rating": 2,
+    "merits": [
+      {
+        "name": "Fame",
+        "level": 2,
+        "type": "merit",
+        "summary": "1 - a select subculture loves you, 5 - you are well known and loved globally"
+      },
+      {
+        "name": "Contacts",
+        "level": 2,
+        "type": "merit",
+        "summary": "mortals who provide information or valuable items"
+      }
+    ],
+    "flaws": [
+      {
+        "name": "Haunted",
+        "level": 1,
+        "type": "flaw",
+        "summary": "ghostly presence in your haven"
+      }
+    ]
+  },
+  "health": {
+    "total": 5,
+    "superficial": 0,
+    "aggravated": 0
+  },
+  "hunger": 0,
+  "clanBane": "",
+  "clanCompulsion": "",
+  "bloodSurge": "",
+  "baneSeverity": "",
+  "birthday": "",
+  "age": 0,
+  "embraced": "",
+  "apparentAge": 0,
+  "notes": "",
+  "concept": "",
+  "experience": {
+    "total": 0,
+    "spent": 0
+  },
+  "history": "",
+  "merits": [
+    {
+      "name": "Linguistics",
+      "level": 1,
+      "type": "merit",
+      "summary": "fluently speak another language"
+    }
+  ],
+  "flaws": [
+    {
+      "name": "Adversary",
+      "level": 1,
+      "type": "flaw",
+      "summary": "kindred enemy"
+    }
+  ]
+}
