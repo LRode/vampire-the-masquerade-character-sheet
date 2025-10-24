@@ -15,7 +15,9 @@ function App() {
 
   useEffect(() => {
     const cachedCharacterSheet = getCharacterSheetFromLocalStorage();
-    setCharacterSheet(cachedCharacterSheet);
+    if (cachedCharacterSheet) {
+      setCharacterSheet(cachedCharacterSheet);
+    }
   }, []);
 
   useEffect(() => {
