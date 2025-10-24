@@ -2,6 +2,7 @@ export type CharacterSheet = {
   name: string;
   chronicle: string;
   description: string;
+  player: string;
   sire: string;
   clan: string;
   predatorType: PredatorType;

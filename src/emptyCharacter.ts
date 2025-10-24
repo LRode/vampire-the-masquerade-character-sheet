@@ -4,6 +4,7 @@ export const EMPTY_CHARACTER: CharacterSheet = {
   name: "",
   chronicle: "",
   description: "",
+  player: "",
   sire: "",
   clan: "",
   predatorType: {

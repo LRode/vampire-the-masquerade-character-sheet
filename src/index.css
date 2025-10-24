@@ -6,16 +6,9 @@
 
   color-scheme: light dark;
   --content: rgba(255, 255, 255, 1);
-  --background: #1a1a1a;
-  --surface: #252525;
+  --background: #0f0f0f;
+  --surface: #272727;
 
-  --primary: #910000;
-}
-
-@theme {
-  --content: rgba(255, 255, 255, 1);
-  --background: #1a1a1a;
-  --surface: #252525;
   --primary: #910000;
 }
 
@@ -31,12 +24,17 @@ body {
   min-height: 100vh;
   background-color: var(--background);
   color: var(--content);
-  padding: 30px;
+  padding: 50px 30px;
 }
 
 #root {
   border: 2px solid var(--primary);
   width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
   height: 100%;
-  padding: 15px;
+  padding: 25px;
+  padding-top: 0;
+  font-size: 1.1rem;
 }
