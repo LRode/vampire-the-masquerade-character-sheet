@@ -48,53 +48,59 @@ export type CharacterSheet = {
   history: string;
 };
 
-export enum Attribute {
-  Strength = "strength",
-  Charisma = "charisma",
-  Intelligence = "intelligence",
-  Dexterity = "dexterity",
-  Manipulation = "manipulation",
-  Wits = "wits",
-  Stamina = "stamina",
-  Composure = "composure",
-  Resolve = "resolve",
-}
+export const ATTRIBUTE = {
+  Strength: "strength",
+  Charisma: "charisma",
+  Intelligence: "intelligence",
+  Dexterity: "dexterity",
+  Manipulation: "manipulation",
+  Wits: "wits",
+  Stamina: "stamina",
+  Composure: "composure",
+  Resolve: "resolve",
+} as const;
 
-export enum Skill {
-  Athletics = "athletics",
-  Brawl = "brawl",
-  Craft = "craft",
-  Drive = "drive",
-  Firearms = "firearms",
-  Melee = "melee",
-  Larceny = "larceny",
-  Stealth = "stealth",
-  Survival = "survival",
-  AnimalKen = "animal ken",
-  Etiquette = "etiquette",
-  Insight = "insight",
-  Intimidation = "intimidation",
-  Leadership = "leadership",
-  Performance = "performance",
-  Persuasion = "persuasion",
-  Streetwise = "streetwise",
-  Subterfuge = "subterfuge",
-  Academics = "academics",
-  Awareness = "awareness",
-  Finance = "finance",
-  Investigation = "investigation",
-  Medicine = "medicine",
-  Occult = "occult",
-  Politics = "politics",
-  Science = "science",
-  Technology = "technology",
-}
+export type Attribute = (typeof ATTRIBUTE)[keyof typeof ATTRIBUTE];
 
-export enum Discipline {
-  Auspex = "auspex",
-  Celerity = "celerity",
-  Presence = "presence",
-}
+export const SKILL = {
+  Athletics: "athletics",
+  Brawl: "brawl",
+  Craft: "craft",
+  Drive: "drive",
+  Firearms: "firearms",
+  Melee: "melee",
+  Larceny: "larceny",
+  Stealth: "stealth",
+  Survival: "survival",
+  AnimalKen: "animal ken",
+  Etiquette: "etiquette",
+  Insight: "insight",
+  Intimidation: "intimidation",
+  Leadership: "leadership",
+  Performance: "performance",
+  Persuasion: "persuasion",
+  Streetwise: "streetwise",
+  Subterfuge: "subterfuge",
+  Academics: "academics",
+  Awareness: "awareness",
+  Finance: "finance",
+  Investigation: "investigation",
+  Medicine: "medicine",
+  Occult: "occult",
+  Politics: "politics",
+  Science: "science",
+  Technology: "technology",
+} as const;
+
+export type Skill = (typeof SKILL)[keyof typeof SKILL];
+
+export const DISCIPLINE = {
+  Auspex: "auspex",
+  Celerity: "celerity",
+  Presence: "presence",
+} as const;
+
+export type Discipline = (typeof DISCIPLINE)[keyof typeof DISCIPLINE];
 
 export type SkillSpecialty = {
   skill: Skill;
