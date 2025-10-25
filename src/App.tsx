@@ -1,26 +1,64 @@
-import { useEffect, useState } from "react";
-import { SKILL, type CharacterSheet } from "./types";
+import { useEffect, useReducer, useCallback } from "react";
+import { type CharacterSheet } from "./types";
 import { EMPTY_CHARACTER } from "./emptyCharacter";
 import {
   debouncedSaveCharacterSheetToLocalStorage,
   getCharacterSheetFromLocalStorage,
 } from "./utils/localStorage";
-import { TextInput } from "./components/TextInput";
-import { Column } from "./components/Column";
 import { ThreeColRow } from "./components/ThreeColRow";
 import { Dots } from "./components/Dots";
 import { DamageTracker } from "./components/DamageTracker";
-import { Attribute } from "./components/Attribute";
-import { Skill } from "./components/Skill";
+import { Skills } from "./sections/Skills";
+import { Overview } from "./sections/Overview";
+import { Attributes } from "./sections/Attributes";
+
+type CharacterAction =
+  | { type: "SET_CHARACTER"; payload: CharacterSheet }
+  | { type: "UPDATE_FIELD"; payload: { key: string; value: any } }
+  | { type: "UPDATE_NESTED_FIELD"; payload: { path: string[]; value: any } };
+
+function characterReducer(
+  state: CharacterSheet,
+  action: CharacterAction,
+): CharacterSheet {
+  switch (action.type) {
+    case "SET_CHARACTER":
+      return action.payload;
+    case "UPDATE_FIELD":
+      return {
+        ...state,
+        [action.payload.key]: action.payload.value,
+      };
+    case "UPDATE_NESTED_FIELD": {
+      const { path, value } = action.payload;
+      const newState = { ...state };
+      let current: any = newState;
+
+      // Navigate to the parent object
+      for (let i = 0; i < path.length - 1; i++) {
+        current[path[i]] = { ...current[path[i]] };
+        current = current[path[i]];
+      }
+
+      // Set the final value
+      current[path[path.length - 1]] = value;
+      return newState;
+    }
+    default:
+      return state;
+  }
+}
 
 function App() {
-  const [characterSheet, setCharacterSheet] =
-    useState<CharacterSheet>(EMPTY_CHARACTER);
+  const [characterSheet, dispatch] = useReducer(
+    characterReducer,
+    EMPTY_CHARACTER,
+  );
 
   useEffect(() => {
     const cachedCharacterSheet = getCharacterSheetFromLocalStorage();
     if (cachedCharacterSheet) {
-      setCharacterSheet(cachedCharacterSheet);
+      dispatch({ type: "SET_CHARACTER", payload: cachedCharacterSheet });
     }
   }, []);
 
@@ -28,12 +66,13 @@ function App() {
     debouncedSaveCharacterSheetToLocalStorage(characterSheet);
   }, [characterSheet]);
 
-  const updateField = (key: string, value: any) => {
-    setCharacterSheet({
-      ...characterSheet,
-      [key]: value,
-    });
-  };
+  const updateField = useCallback((key: string, value: any) => {
+    dispatch({ type: "UPDATE_FIELD", payload: { key, value } });
+  }, []);
+
+  const updateNestedField = useCallback((path: string[], value: any) => {
+    dispatch({ type: "UPDATE_NESTED_FIELD", payload: { path, value } });
+  }, []);
 
   return (
     <>
@@ -44,31 +83,13 @@ function App() {
       </h1>
 
       <main>
-        <ThreeColRow>
-          <TextInput
-            name="name"
-            label="Name"
-            value={characterSheet.name}
-            handleChange={updateField}
-          />
-          <TextInput
-            name="clan"
-            label="Clan"
-            value={characterSheet.clan}
-            handleChange={updateField}
-          />
-          <TextInput
-            name="predatorType.name"
-            label="Predator type"
-            value={characterSheet.predatorType.name}
-            handleChange={(_, value) =>
-              updateField("predatorType", {
-                ...characterSheet.predatorType,
-                name: value,
-              })
-            }
-          />
-        </ThreeColRow>
+        <Overview
+          name={characterSheet.name}
+          clan={characterSheet.clan}
+          predatorType={characterSheet.predatorType.name}
+          updateField={updateField}
+          updateNestedField={updateNestedField}
+        />
 
         <div className="border border-[var(--light-bg)] my-6 pt-5">
           <ThreeColRow wrapBelowDesktop>
@@ -80,10 +101,7 @@ function App() {
                 groupBy={5}
                 filledDots={characterSheet.health.totalDots}
                 handleChange={(value) =>
-                  updateField("health", {
-                    ...characterSheet.health,
-                    totalDots: value,
-                  })
+                  updateNestedField(["health", "totalDots"], value)
                 }
               />
               <DamageTracker
@@ -91,10 +109,7 @@ function App() {
                 groupBy={5}
                 damage={characterSheet.health.damage}
                 handleChange={(damage) =>
-                  updateField("health", {
-                    ...characterSheet.health,
-                    damage,
-                  })
+                  updateNestedField(["health", "damage"], damage)
                 }
               />
             </div>
@@ -107,10 +122,7 @@ function App() {
                 groupBy={5}
                 filledDots={characterSheet.willpower.totalDots}
                 handleChange={(value) =>
-                  updateField("willpower", {
-                    ...characterSheet.willpower,
-                    totalDots: value,
-                  })
+                  updateNestedField(["willpower", "totalDots"], value)
                 }
               />
 
@@ -119,10 +131,7 @@ function App() {
                 groupBy={5}
                 damage={characterSheet.willpower.damage}
                 handleChange={(damage) =>
-                  updateField("willpower", {
-                    ...characterSheet.willpower,
-                    damage,
-                  })
+                  updateNestedField(["willpower", "damage"], damage)
                 }
               />
             </div>
@@ -140,140 +149,15 @@ function App() {
           </ThreeColRow>
         </div>
 
-        <h2 className="uppercase border-b mb-2 text-center">Attributes</h2>
-        <ThreeColRow>
-          <Column>
-            <h3 className="text-center">Physical</h3>
-            <Attribute
-              name="strength"
-              label="Strength"
-              dots={characterSheet.attributes.strength}
-              handleChange={(value) =>
-                updateField("attributes", {
-                  ...characterSheet.attributes,
-                  strength: value,
-                })
-              }
-            />
-            <Attribute
-              name="dexterity"
-              label="Dexterity"
-              dots={characterSheet.attributes.dexterity}
-              handleChange={(value) =>
-                updateField("attributes", {
-                  ...characterSheet.attributes,
-                  dexterity: value,
-                })
-              }
-            />
-            <Attribute
-              name="stamina"
-              label="Stamina"
-              dots={characterSheet.attributes.stamina}
-              handleChange={(value) =>
-                updateField("attributes", {
-                  ...characterSheet.attributes,
-                  stamina: value,
-                })
-              }
-            />
-          </Column>
+        <Attributes
+          attributes={characterSheet.attributes}
+          updateNestedField={updateNestedField}
+        />
 
-          <Column>
-            <h3 className="text-center">Social</h3>
-            <Attribute
-              name="charisma"
-              label="Charisma"
-              dots={characterSheet.attributes.charisma}
-              handleChange={(value) =>
-                updateField("attributes", {
-                  ...characterSheet.attributes,
-                  charisma: value,
-                })
-              }
-            />
-            <Attribute
-              name="manipulation"
-              label="Manipulation"
-              dots={characterSheet.attributes.manipulation}
-              handleChange={(value) =>
-                updateField("attributes", {
-                  ...characterSheet.attributes,
-                  manipulation: value,
-                })
-              }
-            />
-            <Attribute
-              name="composure"
-              label="Composure"
-              dots={characterSheet.attributes.composure}
-              handleChange={(value) =>
-                updateField("attributes", {
-                  ...characterSheet.attributes,
-                  composure: value,
-                })
-              }
-            />
-          </Column>
-
-          <Column>
-            <h3 className="text-center">Mental</h3>
-            <Attribute
-              name="intelligence"
-              label="Intelligence"
-              dots={characterSheet.attributes.intelligence}
-              handleChange={(value) =>
-                updateField("attributes", {
-                  ...characterSheet.attributes,
-                  intelligence: value,
-                })
-              }
-            />
-            <Attribute
-              name="wits"
-              label="Wits"
-              dots={characterSheet.attributes.wits}
-              handleChange={(value) =>
-                updateField("attributes", {
-                  ...characterSheet.attributes,
-                  wits: value,
-                })
-              }
-            />
-            <Attribute
-              name="resolve"
-              label="Resolve"
-              dots={characterSheet.attributes.resolve}
-              handleChange={(value) =>
-                updateField("attributes", {
-                  ...characterSheet.attributes,
-                  resolve: value,
-                })
-              }
-            />
-          </Column>
-        </ThreeColRow>
-
-        <h2 className="uppercase border-b mb-4 text-center">Skills</h2>
-        <ThreeColRow wrapBelowDesktop>
-          {Object.keys(SKILL)
-            .sort()
-            .map((skillKey) => {
-              const skill = SKILL[skillKey as keyof typeof SKILL];
-              return (
-                <Skill
-                  name={skill}
-                  skill={characterSheet.skills[skill]}
-                  handleChange={(newSkillValue) =>
-                    updateField("skills", {
-                      ...characterSheet.skills,
-                      [skill]: newSkillValue,
-                    })
-                  }
-                />
-              );
-            })}
-        </ThreeColRow>
+        <Skills
+          characterSheetSkills={characterSheet.skills}
+          updateField={updateNestedField}
+        />
       </main>
     </>
   );
