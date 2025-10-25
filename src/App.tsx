@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { CharacterSheet } from "./types";
+import { SKILL, type CharacterSheet } from "./types";
 import { EMPTY_CHARACTER } from "./emptyCharacter";
 import {
   debouncedSaveCharacterSheetToLocalStorage,
@@ -11,6 +11,7 @@ import { ThreeColRow } from "./components/ThreeColRow";
 import { Dots } from "./components/Dots";
 import { DamageTracker } from "./components/DamageTracker";
 import { Attribute } from "./components/Attribute";
+import { Skill } from "./components/Skill";
 
 function App() {
   const [characterSheet, setCharacterSheet] =
@@ -253,45 +254,25 @@ function App() {
           </Column>
         </ThreeColRow>
 
-        <ThreeColRow>
-          <Column>
-            <TextInput
-              name="sect"
-              label="Sect"
-              value={characterSheet.sect}
-              handleChange={updateField}
-            />
-          </Column>
-
-          <Column>
-            <TextInput
-              name="generation"
-              label="Generation"
-              value={characterSheet.generation}
-              handleChange={updateField}
-            />
-          </Column>
-
-          <Column>
-            <TextInput
-              name="Chronicle"
-              label="Chronicle"
-              value={characterSheet.chronicle}
-              handleChange={updateField}
-            />
-            <TextInput
-              name="ambition"
-              label="Ambition"
-              value={characterSheet.ambition}
-              handleChange={updateField}
-            />
-            <TextInput
-              name="desire"
-              label="Desire"
-              value={characterSheet.desire}
-              handleChange={updateField}
-            />
-          </Column>
+        <h2 className="uppercase border-b mb-4 text-center">Skills</h2>
+        <ThreeColRow wrapBelowDesktop>
+          {Object.keys(SKILL)
+            .sort()
+            .map((skillKey) => {
+              const skill = SKILL[skillKey as keyof typeof SKILL];
+              return (
+                <Skill
+                  name={skill}
+                  skill={characterSheet.skills[skill]}
+                  handleChange={(newSkillValue) =>
+                    updateField("skills", {
+                      ...characterSheet.skills,
+                      [skill]: newSkillValue,
+                    })
+                  }
+                />
+              );
+            })}
         </ThreeColRow>
       </main>
     </>

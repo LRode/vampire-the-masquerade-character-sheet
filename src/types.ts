@@ -12,7 +12,7 @@ export type CharacterSheet = {
   desire: string;
   touchstones: Touchstone[];
   attributes: Record<Attribute, number>;
-  skills: Record<Skill, number>;
+  skills: Record<Skill, SkillRecord>;
   skillSpecialties: SkillSpecialty[];
   disciplines: Disciplines[];
   bloodPotency: number;
@@ -91,6 +91,11 @@ export const SKILL = {
 } as const;
 
 export type Skill = (typeof SKILL)[keyof typeof SKILL];
+
+export type SkillRecord = {
+  dots: number;
+  specialty?: string;
+};
 
 export const DISCIPLINE = {
   Auspex: "auspex",

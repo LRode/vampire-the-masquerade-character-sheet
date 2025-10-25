@@ -23,5 +23,5 @@ const saveFormToLocalStorage = (form: CharacterSheet) => {
 
 export const debouncedSaveCharacterSheetToLocalStorage = debounce(
   saveFormToLocalStorage,
-  5000,
+  3000,
 );

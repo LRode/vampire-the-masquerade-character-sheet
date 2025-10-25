@@ -12,8 +12,8 @@ export const Attribute = ({
   handleChange: (value: number) => void;
 }) => {
   return (
-    <div className="flex align-items justify-between">
-      {label}
+    <div className="flex items-center justify-between">
+      <span>{label}</span>
       <Dots
         name={name}
         totalDots={5}
