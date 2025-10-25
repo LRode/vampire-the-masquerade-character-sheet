@@ -10,6 +10,7 @@ import { Column } from "./components/Column";
 import { ThreeColRow } from "./components/ThreeColRow";
 import { Dots } from "./components/Dots";
 import { DamageTracker } from "./components/DamageTracker";
+import { Attribute } from "./components/Attribute";
 
 function App() {
   const [characterSheet, setCharacterSheet] =
@@ -139,7 +140,118 @@ function App() {
         </div>
 
         <h2 className="uppercase border-b mb-2 text-center">Attributes</h2>
-        <ThreeColRow></ThreeColRow>
+        <ThreeColRow>
+          <Column>
+            <h3 className="text-center">Physical</h3>
+            <Attribute
+              name="strength"
+              label="Strength"
+              dots={characterSheet.attributes.strength}
+              handleChange={(value) =>
+                updateField("attributes", {
+                  ...characterSheet.attributes,
+                  strength: value,
+                })
+              }
+            />
+            <Attribute
+              name="dexterity"
+              label="Dexterity"
+              dots={characterSheet.attributes.dexterity}
+              handleChange={(value) =>
+                updateField("attributes", {
+                  ...characterSheet.attributes,
+                  dexterity: value,
+                })
+              }
+            />
+            <Attribute
+              name="stamina"
+              label="Stamina"
+              dots={characterSheet.attributes.stamina}
+              handleChange={(value) =>
+                updateField("attributes", {
+                  ...characterSheet.attributes,
+                  stamina: value,
+                })
+              }
+            />
+          </Column>
+
+          <Column>
+            <h3 className="text-center">Social</h3>
+            <Attribute
+              name="charisma"
+              label="Charisma"
+              dots={characterSheet.attributes.charisma}
+              handleChange={(value) =>
+                updateField("attributes", {
+                  ...characterSheet.attributes,
+                  charisma: value,
+                })
+              }
+            />
+            <Attribute
+              name="manipulation"
+              label="Manipulation"
+              dots={characterSheet.attributes.manipulation}
+              handleChange={(value) =>
+                updateField("attributes", {
+                  ...characterSheet.attributes,
+                  manipulation: value,
+                })
+              }
+            />
+            <Attribute
+              name="composure"
+              label="Composure"
+              dots={characterSheet.attributes.composure}
+              handleChange={(value) =>
+                updateField("attributes", {
+                  ...characterSheet.attributes,
+                  composure: value,
+                })
+              }
+            />
+          </Column>
+
+          <Column>
+            <h3 className="text-center">Mental</h3>
+            <Attribute
+              name="intelligence"
+              label="Intelligence"
+              dots={characterSheet.attributes.intelligence}
+              handleChange={(value) =>
+                updateField("attributes", {
+                  ...characterSheet.attributes,
+                  intelligence: value,
+                })
+              }
+            />
+            <Attribute
+              name="wits"
+              label="Wits"
+              dots={characterSheet.attributes.wits}
+              handleChange={(value) =>
+                updateField("attributes", {
+                  ...characterSheet.attributes,
+                  wits: value,
+                })
+              }
+            />
+            <Attribute
+              name="resolve"
+              label="Resolve"
+              dots={characterSheet.attributes.resolve}
+              handleChange={(value) =>
+                updateField("attributes", {
+                  ...characterSheet.attributes,
+                  resolve: value,
+                })
+              }
+            />
+          </Column>
+        </ThreeColRow>
 
         <ThreeColRow>
           <Column>
