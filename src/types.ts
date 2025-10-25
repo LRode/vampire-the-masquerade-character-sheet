@@ -18,13 +18,11 @@ export type CharacterSheet = {
   bloodPotency: number;
   health: {
     totalDots: number;
-    superficial: number;
-    aggravated: number;
+    damage: Damage[];
   };
   willpower: {
     totalDots: number;
-    superficial: number;
-    aggravated: number;
+    damage: Damage[];
   };
   humanity: number;
   merits: Merit[];
@@ -101,6 +99,15 @@ export const DISCIPLINE = {
 } as const;
 
 export type Discipline = (typeof DISCIPLINE)[keyof typeof DISCIPLINE];
+
+export const DAMAGE_TYPE = {
+  Superficial: "superficial",
+  Aggravated: "aggravated",
+} as const;
+
+export type DamageType = (typeof DAMAGE_TYPE)[keyof typeof DAMAGE_TYPE];
+
+export type Damage = { type: DamageType };
 
 export type SkillSpecialty = {
   skill: Skill;

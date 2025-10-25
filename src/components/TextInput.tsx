@@ -3,11 +3,13 @@ export const TextInput = ({
   label,
   value,
   handleChange,
+  className = "",
 }: {
   name: string;
   label: string;
   value: string | number;
   handleChange: (key: string, value: string) => void;
+  className?: string;
 }) => {
   return (
     <label className="flex flex-col">
@@ -17,8 +19,9 @@ export const TextInput = ({
         name={name}
         key={name}
         value={value}
+        autoComplete="off"
         onChange={(e) => handleChange(name, e.target.value)}
-        className="bg-[var(--surface)] p-1 w-full md:w-55"
+        className={`bg-[var(--surface)] p-1 w-full ${className}`}
       />
     </label>
   );

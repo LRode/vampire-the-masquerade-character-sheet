@@ -63,8 +63,7 @@ export const EMPTY_CHARACTER: CharacterSheet = {
   bloodPotency: 0,
   willpower: {
     totalDots: 0,
-    superficial: 0,
-    aggravated: 0,
+    damage: [],
   },
   humanity: 0,
   haven: {
@@ -75,8 +74,7 @@ export const EMPTY_CHARACTER: CharacterSheet = {
   },
   health: {
     totalDots: 0,
-    superficial: 0,
-    aggravated: 0,
+    damage: [],
   },
   hunger: 0,
   clanBane: "",
