@@ -5,12 +5,10 @@ import {
   debouncedSaveCharacterSheetToLocalStorage,
   getCharacterSheetFromLocalStorage,
 } from "./utils/localStorage";
-import { ThreeColRow } from "./components/ThreeColRow";
-import { Dots } from "./components/Dots";
-import { DamageTracker } from "./components/DamageTracker";
 import { Skills } from "./sections/Skills";
 import { Overview } from "./sections/Overview";
 import { Attributes } from "./sections/Attributes";
+import { Stats } from "./sections/Stats";
 
 type CharacterAction =
   | { type: "SET_CHARACTER"; payload: CharacterSheet }
@@ -91,63 +89,13 @@ function App() {
           updateNestedField={updateNestedField}
         />
 
-        <div className="border border-[var(--light-bg)] my-6 pt-5">
-          <ThreeColRow wrapBelowDesktop>
-            <div className="mx-auto">
-              <h3 className="text-center">Health</h3>
-              <Dots
-                name="health"
-                totalDots={15}
-                groupBy={5}
-                filledDots={characterSheet.health.totalDots}
-                handleChange={(value) =>
-                  updateNestedField(["health", "totalDots"], value)
-                }
-              />
-              <DamageTracker
-                totalPossible={15}
-                groupBy={5}
-                damage={characterSheet.health.damage}
-                handleChange={(damage) =>
-                  updateNestedField(["health", "damage"], damage)
-                }
-              />
-            </div>
-
-            <div className="mx-auto">
-              <h3 className="text-center">Willpower</h3>
-              <Dots
-                name="willpower"
-                totalDots={15}
-                groupBy={5}
-                filledDots={characterSheet.willpower.totalDots}
-                handleChange={(value) =>
-                  updateNestedField(["willpower", "totalDots"], value)
-                }
-              />
-
-              <DamageTracker
-                totalPossible={15}
-                groupBy={5}
-                damage={characterSheet.willpower.damage}
-                handleChange={(damage) =>
-                  updateNestedField(["willpower", "damage"], damage)
-                }
-              />
-            </div>
-
-            <div className="mx-auto">
-              <h3 className="text-center">Humanity</h3>
-              <Dots
-                name="humanity"
-                totalDots={10}
-                groupBy={5}
-                filledDots={characterSheet.humanity}
-                handleChange={(value) => updateField("humanity", value)}
-              />
-            </div>
-          </ThreeColRow>
-        </div>
+        <Stats
+          health={characterSheet.health}
+          willpower={characterSheet.willpower}
+          humanity={characterSheet.humanity}
+          updateField={updateField}
+          updateNestedField={updateNestedField}
+        />
 
         <Attributes
           attributes={characterSheet.attributes}
