@@ -1,6 +1,7 @@
 import { memo } from "react";
 import type { SkillRecord } from "../types";
 import { Dots } from "./Dots";
+import { TextInput } from "./TextInput";
 
 export const Skill = memo(
   ({
@@ -14,22 +15,17 @@ export const Skill = memo(
   }) => {
     return (
       <div className="flex items-center justify-between leading-none gap-2">
-        <label htmlFor={`${name}-specialty`} className="capitalize text-nowrap">
-          {name}
-        </label>
-        <input
-          type="text"
+        <TextInput
           name={`${name}-specialty`}
-          id={`${name}-specialty`}
-          value={skill.specialty}
-          autoComplete="off"
-          onChange={(e) =>
+          label={name}
+          isRowLayout
+          value={skill.specialty ?? ""}
+          handleChange={(_, value) =>
             handleChange({
               ...skill,
-              specialty: e.target.value,
+              specialty: value,
             })
           }
-          className={`bg-[var(--surface)] p-1 flex min-w-0`}
         />
         <Dots
           name={name}

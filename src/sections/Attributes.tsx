@@ -13,7 +13,7 @@ export const Attributes = memo(
     updateNestedField: (path: string[], value: any) => void;
   }) => {
     return (
-      <>
+      <section>
         <h2 className="uppercase border-b mb-2 text-center">Attributes</h2>
         <ThreeColRow>
           <Column>
@@ -100,7 +100,7 @@ export const Attributes = memo(
             />
           </Column>
         </ThreeColRow>
-      </>
+      </section>
     );
   },
 );

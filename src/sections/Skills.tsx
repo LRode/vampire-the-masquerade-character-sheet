@@ -16,7 +16,7 @@ export const Skills = memo(
     }, []);
 
     return (
-      <>
+      <section>
         <h2 className="uppercase border-b mb-4 text-center">Skills</h2>
         <ThreeColRow wrapBelowDesktop>
           {skills.map((skillKey) => {
@@ -33,7 +33,7 @@ export const Skills = memo(
             );
           })}
         </ThreeColRow>
-      </>
+      </section>
     );
   },
 );

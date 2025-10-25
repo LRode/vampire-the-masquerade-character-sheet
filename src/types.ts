@@ -97,13 +97,13 @@ export type SkillRecord = {
   specialty?: string;
 };
 
-export const DISCIPLINE = {
-  Auspex: "auspex",
-  Celerity: "celerity",
-  Presence: "presence",
-} as const;
+// export const DISCIPLINE = {
+//   Auspex: "auspex",
+//   Celerity: "celerity",
+//   Presence: "presence",
+// } as const;
 
-export type Discipline = (typeof DISCIPLINE)[keyof typeof DISCIPLINE];
+// export type Discipline = (typeof DISCIPLINE)[keyof typeof DISCIPLINE];
 
 export const DAMAGE_TYPE = {
   Superficial: "superficial",
@@ -148,11 +148,15 @@ export type Touchstone = {
 
 export type Ability = {
   name: string;
+  cost: string;
+  dicePools: string;
+  duration: string;
   summary: string;
+  level: number;
 };
 
 export type Disciplines = {
-  name: Discipline;
+  name: string;
   dots: number;
   abilities: Ability[];
 };

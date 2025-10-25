@@ -5,8 +5,8 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  --content: rgba(255, 255, 255, 1);
-  --background: #0f0f0f;
+  --content: rgb(226, 226, 226);
+  --background: #141414;
   --surface: #272727;
   --light-bg: #cccccc;
 

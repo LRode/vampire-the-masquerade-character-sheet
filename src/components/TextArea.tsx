@@ -1,37 +1,35 @@
 import { memo } from "react";
 
-export const TextInput = memo(
+export const TextArea = memo(
   ({
     name,
     label,
     isLabelVisible = true,
-    isRowLayout = false,
     value,
     handleChange,
     className = "",
     labelClassName = "",
+    rows = 2,
   }: {
     name: string;
     label: string;
     isLabelVisible?: boolean;
-    isRowLayout?: boolean;
     value: string | number;
     handleChange: (key: string, value: string) => void;
     className?: string;
     labelClassName?: string;
+    rows?: number;
   }) => {
     return (
-      <label
-        className={`capitalize flex ${isRowLayout ? "flex-row gap-2 items-center flex-grow" : "flex-col"} ${labelClassName}`}
-      >
+      <label className={`capitalize flex flex-col ${labelClassName}`}>
         <span className={`${isLabelVisible ? "" : "sr-only"} text-nowrap`}>
           {label}
         </span>
-        <input
-          type="text"
+        <textarea
           name={name}
           key={name}
           value={value}
+          rows={rows}
           autoComplete="off"
           onChange={(e) => handleChange(name, e.target.value)}
           className={`bg-[var(--surface)] p-1 w-full ${className}`}

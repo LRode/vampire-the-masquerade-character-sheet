@@ -9,6 +9,7 @@ import { Skills } from "./sections/Skills";
 import { Overview } from "./sections/Overview";
 import { Attributes } from "./sections/Attributes";
 import { Stats } from "./sections/Stats";
+import { Disciplines } from "./sections/Disciplines";
 
 type CharacterAction =
   | { type: "SET_CHARACTER"; payload: CharacterSheet }
@@ -40,6 +41,7 @@ function characterReducer(
 
       // Set the final value
       current[path[path.length - 1]] = value;
+
       return newState;
     }
     default:
@@ -105,6 +107,11 @@ function App() {
 
         <Skills
           characterSheetSkills={characterSheet.skills}
+          updateField={updateNestedField}
+        />
+
+        <Disciplines
+          disciplines={characterSheet.disciplines}
           updateField={updateNestedField}
         />
       </main>

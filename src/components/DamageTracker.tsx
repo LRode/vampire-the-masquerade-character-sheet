@@ -1,4 +1,5 @@
 import { DAMAGE_TYPE, type Damage, type DamageType } from "../types";
+import { Button } from "./Button";
 
 export const DamageTracker = ({
   damage = [],
@@ -72,42 +73,42 @@ export const DamageTracker = ({
     <div className="my-2">
       <div className="flex mb-4">{damageItems}</div>
       <p className="flex items-center justify-center gap-4 mb-4 leading-none">
-        <button
-          className="w-6 h-6 rounded-sm bg-[var(--primary)] leading-none cursor-pointer disabled:opacity-50"
+        <Button
+          className="w-6 h-6"
           disabled={!damage.find((dmg) => dmg.type === DAMAGE_TYPE.Superficial)}
           onClick={() => removeDamage(DAMAGE_TYPE.Superficial)}
         >
           -
-        </button>
+        </Button>
         Superficial
-        <button
+        <Button
           disabled={
             damage.length === totalPossible &&
             !damage.find((dmg) => dmg.type === DAMAGE_TYPE.Superficial)
           }
-          className="w-6 h-6 rounded-sm bg-[var(--primary)] leading-none cursor-pointer disabled:opacity-50"
+          className="w-6 h-6"
           onClick={() => addDamage(DAMAGE_TYPE.Superficial)}
         >
           +
-        </button>
+        </Button>
       </p>
 
       <p className="flex items-center justify-center gap-4 mb-4 leading-none">
-        <button
-          className="w-6 h-6 rounded-sm bg-[var(--primary)] leading-none cursor-pointer disabled:opacity-50"
+        <Button
+          className="w-6 h-6"
           disabled={!damage.find((dmg) => dmg.type === DAMAGE_TYPE.Aggravated)}
           onClick={() => removeDamage(DAMAGE_TYPE.Aggravated)}
         >
           -
-        </button>
+        </Button>
         Aggravated
-        <button
+        <Button
           disabled={damage.length === totalPossible}
-          className="w-6 h-6 rounded-sm bg-[var(--primary)] leading-none cursor-pointer disabled:opacity-50"
+          className="w-6 h-6"
           onClick={() => addDamage(DAMAGE_TYPE.Aggravated)}
         >
           +
-        </button>
+        </Button>
       </p>
     </div>
   );
