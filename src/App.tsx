@@ -93,6 +93,7 @@ function App() {
           health={characterSheet.health}
           willpower={characterSheet.willpower}
           humanity={characterSheet.humanity}
+          hunger={characterSheet.hunger}
           updateField={updateField}
           updateNestedField={updateNestedField}
         />

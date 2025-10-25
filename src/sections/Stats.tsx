@@ -3,12 +3,14 @@ import { DamageTracker } from "../components/DamageTracker";
 import { Dots } from "../components/Dots";
 import { ThreeColRow } from "../components/ThreeColRow";
 import type { Damage } from "../types";
+import { TextInput } from "../components/TextInput";
 
 export const Stats = memo(
   ({
     health,
     willpower,
     humanity,
+    hunger,
     updateField,
     updateNestedField,
   }: {
@@ -21,6 +23,7 @@ export const Stats = memo(
       damage: Damage[];
     };
     humanity: number;
+    hunger: number;
     updateField: (name: string, value: any) => void;
     updateNestedField: (path: string[], value: any) => void;
   }) => {
@@ -70,7 +73,7 @@ export const Stats = memo(
             />
           </div>
 
-          <div className="mx-auto">
+          <div className="mx-auto flex flex-col items-center">
             <h3 className="text-center">Humanity</h3>
             <Dots
               name="humanity"
@@ -78,6 +81,14 @@ export const Stats = memo(
               groupBy={5}
               filledDots={humanity}
               handleChange={(value) => updateField("humanity", value)}
+            />
+            <TextInput
+              name="hunger"
+              label="Hunger"
+              value={hunger}
+              handleChange={updateField}
+              labelClassName="text-center mt-4 flex-row gap-2 items-center"
+              className="max-w-16"
             />
           </div>
         </ThreeColRow>
