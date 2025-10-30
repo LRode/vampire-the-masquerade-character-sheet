@@ -26,7 +26,7 @@ export type CharacterSheet = {
   };
   humanity: number;
   merits: Merit[];
-  flaws: Flaw[];
+  flaws: Merit[];
   haven: Haven;
   hunger: number;
   clanBane: string;
@@ -121,15 +121,8 @@ export type SkillSpecialty = {
 
 export type Merit = {
   name: string;
-  level: number;
-  type: "merit";
-  summary: string;
-};
-
-export type Flaw = {
-  name: string;
-  level: number;
-  type: "flaw";
+  dots: number;
+  type: "merit" | "flaw";
   summary: string;
 };
 
@@ -137,7 +130,7 @@ export type PredatorType = {
   name: string;
   pickedDiscipline: string;
   pickedSpecialties: SkillSpecialty[];
-  pickedMeritsAndFlaws: Array<Merit | Flaw>;
+  pickedMeritsAndFlaws: Array<Merit>;
 };
 
 export type Touchstone = {
@@ -165,5 +158,5 @@ export type Haven = {
   name: string;
   rating: number;
   merits: Merit[];
-  flaws: Flaw[];
+  flaws: Merit[];
 };

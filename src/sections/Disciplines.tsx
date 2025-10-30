@@ -60,7 +60,7 @@ export const Disciplines = memo(
             />
           ))}
         </ThreeColRow>
-        <Button className="mx-auto mt-8 block p-3" onClick={addDiscipline}>
+        <Button className="mx-auto mt-5 block p-3" onClick={addDiscipline}>
           Add Discipline
         </Button>
       </section>

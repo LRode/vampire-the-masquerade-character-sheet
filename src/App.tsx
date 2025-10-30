@@ -10,6 +10,7 @@ import { Overview } from "./sections/Overview";
 import { Attributes } from "./sections/Attributes";
 import { Stats } from "./sections/Stats";
 import { Disciplines } from "./sections/Disciplines";
+import { Merits } from "./sections/Merits";
 
 type CharacterAction =
   | { type: "SET_CHARACTER"; payload: CharacterSheet }
@@ -114,6 +115,26 @@ function App() {
           disciplines={characterSheet.disciplines}
           updateField={updateNestedField}
         />
+
+        <section className="pt-6">
+          <h2 className="uppercase border-b mb-4 text-center">
+            Merits & Flaws
+          </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-4 md:gap-x-8 mb-3 gap-y-2">
+            <Merits
+              merits={characterSheet.merits}
+              type="merit"
+              field="merits"
+              updateField={updateNestedField}
+            />
+            <Merits
+              merits={characterSheet.flaws}
+              type="flaw"
+              field="flaws"
+              updateField={updateNestedField}
+            />
+          </div>
+        </section>
       </main>
     </>
   );
