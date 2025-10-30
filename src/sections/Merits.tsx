@@ -49,7 +49,7 @@ export const Merits = memo(
 
     return (
       <div>
-        <h3 className="capitalize mb-4 text-center">{field}</h3>
+        <h3 className="capitalize mb-4 text-center mt-6 lg:mt-0">{field}</h3>
         {merits.map((merit, i) => (
           <Merit
             key={i}
@@ -59,7 +59,7 @@ export const Merits = memo(
             deleteMerit={deleteMerit}
           />
         ))}
-        <Button className="mx-auto mt-8 block p-3" onClick={addMerit}>
+        <Button className="mx-auto mt-4 block p-3" onClick={addMerit}>
           Add {type}
         </Button>
       </div>

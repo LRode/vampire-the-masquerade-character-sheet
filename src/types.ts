@@ -44,6 +44,10 @@ export type CharacterSheet = {
     spent: number;
   };
   history: string;
+  powerBonus: string;
+  mendAmount: string;
+  rouseReRoll: string;
+  feedingPenalty: string;
 };
 
 export const ATTRIBUTE = {

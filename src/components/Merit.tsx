@@ -59,7 +59,7 @@ export const Merit = memo(
           label={`Summary`}
           value={summary}
           className="flex-grow"
-          labelClassName="flex-row flex-grow gap-x-2"
+          isRowLayout
           handleChange={(_, value) =>
             handleUpdateMerit(
               {
