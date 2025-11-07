@@ -4,6 +4,7 @@ import { EMPTY_CHARACTER } from "./emptyCharacter";
 import {
   debouncedSaveCharacterSheetToLocalStorage,
   getCharacterSheetFromLocalStorage,
+  saveCharacterSheetToLocalStorage,
 } from "./utils/localStorage";
 import { Skills } from "./sections/Skills";
 import { Overview } from "./sections/Overview";
@@ -14,6 +15,8 @@ import { Merits } from "./sections/Merits";
 import { TheBlood } from "./sections/TheBlood";
 import { Experience } from "./sections/Experience";
 import { Profile } from "./sections/Profile";
+import { ExportButton } from "./components/ExportButton";
+import { ImportButton } from "./components/ImportButton";
 
 type CharacterAction =
   | { type: "SET_CHARACTER"; payload: CharacterSheet }
@@ -78,8 +81,17 @@ function App() {
     dispatch({ type: "UPDATE_NESTED_FIELD", payload: { path, value } });
   }, []);
 
+  const handleImport = useCallback((importedCharacter: CharacterSheet) => {
+    dispatch({ type: "SET_CHARACTER", payload: importedCharacter });
+    saveCharacterSheetToLocalStorage(importedCharacter);
+  }, []);
+
   return (
     <>
+      <div className="absolute top-4 left-4 flex gap-2 z-10">
+        <ExportButton characterSheet={characterSheet} />
+        <ImportButton onImport={handleImport} />
+      </div>
       <h1 className="text-center text-xl mb-8 bg-[var(--background)] -m-7 px-6 w-fit mx-auto">
         <div className="uppercase text-5xl border-y w-fit mx-auto">Vampire</div>
         <div className="uppercase">The Masquerade</div>

@@ -21,6 +21,10 @@ const saveFormToLocalStorage = (form: CharacterSheet) => {
   localStorage.setItem("CHARACTER_SHEET", JSON.stringify(form));
 };
 
+export const saveCharacterSheetToLocalStorage = (form: CharacterSheet) => {
+  saveFormToLocalStorage(form);
+};
+
 export const debouncedSaveCharacterSheetToLocalStorage = debounce(
   saveFormToLocalStorage,
   3000,
