@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { Dots } from "../components/Dots";
 import { TextInput } from "../components/TextInput";
+import { TextArea } from "../components/TextArea";
 import { Column } from "../components/Column";
 
 export const TheBlood = memo(
@@ -12,6 +13,8 @@ export const TheBlood = memo(
     mendAmount,
     rouseReRoll,
     feedingPenalty,
+    clanBane,
+    clanCompulsion,
     updateField,
   }: {
     bloodPotency: number;
@@ -21,6 +24,8 @@ export const TheBlood = memo(
     mendAmount: string;
     rouseReRoll: string;
     feedingPenalty: string;
+    clanBane: string;
+    clanCompulsion: string;
     updateField: (name: string, value: any) => void;
   }) => {
     return (
@@ -75,6 +80,22 @@ export const TheBlood = memo(
               handleChange={updateField}
             />
           </Column>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 mt-2">
+          <TextArea
+            name="clanBane"
+            label="Clan Bane"
+            value={clanBane}
+            rows={3}
+            handleChange={updateField}
+          />
+          <TextArea
+            name="clanCompulsion"
+            label="Clan Compulsion"
+            value={clanCompulsion}
+            rows={3}
+            handleChange={updateField}
+          />
         </div>
       </div>
     );

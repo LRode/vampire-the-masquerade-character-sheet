@@ -13,6 +13,7 @@ import { Disciplines } from "./sections/Disciplines";
 import { Merits } from "./sections/Merits";
 import { TheBlood } from "./sections/TheBlood";
 import { Experience } from "./sections/Experience";
+import { Profile } from "./sections/Profile";
 
 type CharacterAction =
   | { type: "SET_CHARACTER"; payload: CharacterSheet }
@@ -150,6 +151,8 @@ function App() {
                 mendAmount={characterSheet.mendAmount}
                 rouseReRoll={characterSheet.rouseReRoll}
                 feedingPenalty={characterSheet.feedingPenalty}
+                clanBane={characterSheet.clanBane}
+                clanCompulsion={characterSheet.clanCompulsion}
                 updateField={updateField}
               />
             </div>
@@ -163,6 +166,26 @@ function App() {
               />
             </div>
           </div>
+        </section>
+
+        <section className="pt-6">
+          <h2 className="uppercase border-b mb-4 text-center">Profile</h2>
+          <Profile
+            ambition={characterSheet.ambition}
+            desire={characterSheet.desire}
+            description={characterSheet.description}
+            notes={characterSheet.notes}
+            sire={characterSheet.sire}
+            birthday={characterSheet.birthday}
+            age={characterSheet.age}
+            embraced={characterSheet.embraced}
+            apparentAge={characterSheet.apparentAge}
+            generation={characterSheet.generation}
+            chronicleTenets={characterSheet.chronicleTenets}
+            convictions={characterSheet.convictions}
+            touchstonesText={characterSheet.touchstonesText}
+            updateField={updateField}
+          />
         </section>
       </main>
     </>

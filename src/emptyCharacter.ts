@@ -98,4 +98,7 @@ export const EMPTY_CHARACTER: CharacterSheet = {
   mendAmount: "",
   rouseReRoll: "",
   feedingPenalty: "",
+  chronicleTenets: "",
+  convictions: "",
+  touchstonesText: "",
 };

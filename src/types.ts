@@ -48,6 +48,9 @@ export type CharacterSheet = {
   mendAmount: string;
   rouseReRoll: string;
   feedingPenalty: string;
+  chronicleTenets: string;
+  convictions: string;
+  touchstonesText: string;
 };
 
 export const ATTRIBUTE = {
