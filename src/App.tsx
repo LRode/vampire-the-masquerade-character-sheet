@@ -1,10 +1,13 @@
-import { useEffect, useReducer, useCallback } from "react";
+import { useEffect, useReducer, useCallback, useState } from "react";
 import { type CharacterSheet } from "./types";
 import { EMPTY_CHARACTER } from "./emptyCharacter";
 import {
   debouncedSaveCharacterSheetToLocalStorage,
   getCharacterSheetFromLocalStorage,
   saveCharacterSheetToLocalStorage,
+  getActiveSheetId,
+  getCharacterSheetList,
+  createNewCharacterSheet,
 } from "./utils/localStorage";
 import { Skills } from "./sections/Skills";
 import { Overview } from "./sections/Overview";
@@ -17,6 +20,8 @@ import { Experience } from "./sections/Experience";
 import { Profile } from "./sections/Profile";
 import { ExportButton } from "./components/ExportButton";
 import { ImportButton } from "./components/ImportButton";
+import { CharacterTabs } from "./components/CharacterTabs";
+import { RemoveSheetButton } from "./components/RemoveSheetButton";
 
 type CharacterAction =
   | { type: "SET_CHARACTER"; payload: CharacterSheet }
@@ -61,17 +66,75 @@ function App() {
     characterReducer,
     EMPTY_CHARACTER,
   );
+  const [activeSheetId, setActiveSheetId] = useState<string | null>(null);
 
+  // Migrate old single sheet format to new multi-sheet format
   useEffect(() => {
-    const cachedCharacterSheet = getCharacterSheetFromLocalStorage();
-    if (cachedCharacterSheet) {
-      dispatch({ type: "SET_CHARACTER", payload: cachedCharacterSheet });
+    const oldSheet = localStorage.getItem("CHARACTER_SHEET");
+    if (oldSheet) {
+      try {
+        const parsed = JSON.parse(oldSheet);
+        const list = getCharacterSheetList();
+        if (list.length === 0) {
+          // Migrate old sheet to new format
+          const newId = createNewCharacterSheet();
+          saveCharacterSheetToLocalStorage(newId, parsed);
+          setActiveSheetId(newId);
+          dispatch({ type: "SET_CHARACTER", payload: parsed });
+          // Remove old key
+          localStorage.removeItem("CHARACTER_SHEET");
+          return;
+        }
+      } catch (e) {
+        console.error("Error migrating old sheet:", e);
+      }
     }
   }, []);
 
+  // Load active sheet on mount
   useEffect(() => {
-    debouncedSaveCharacterSheetToLocalStorage(characterSheet);
-  }, [characterSheet]);
+    let sheetId = getActiveSheetId();
+
+    // If no active sheet, try to get/create one
+    if (!sheetId) {
+      const list = getCharacterSheetList();
+      if (list.length > 0) {
+        sheetId = list[0];
+      } else {
+        sheetId = createNewCharacterSheet();
+      }
+    }
+
+    const cachedCharacterSheet = getCharacterSheetFromLocalStorage(sheetId);
+    if (cachedCharacterSheet) {
+      setActiveSheetId(sheetId);
+      dispatch({ type: "SET_CHARACTER", payload: cachedCharacterSheet });
+    } else if (sheetId) {
+      // Sheet ID exists but no data, load empty character
+      setActiveSheetId(sheetId);
+      dispatch({ type: "SET_CHARACTER", payload: EMPTY_CHARACTER });
+    }
+  }, []);
+
+  // Load sheet when activeSheetId changes (user switches tabs)
+  useEffect(() => {
+    if (activeSheetId) {
+      const cachedCharacterSheet =
+        getCharacterSheetFromLocalStorage(activeSheetId);
+      if (cachedCharacterSheet) {
+        dispatch({ type: "SET_CHARACTER", payload: cachedCharacterSheet });
+      } else {
+        dispatch({ type: "SET_CHARACTER", payload: EMPTY_CHARACTER });
+      }
+    }
+  }, [activeSheetId]);
+
+  // Save character sheet when it changes
+  useEffect(() => {
+    if (activeSheetId && characterSheet) {
+      debouncedSaveCharacterSheetToLocalStorage(activeSheetId, characterSheet);
+    }
+  }, [characterSheet, activeSheetId]);
 
   const updateField = useCallback((key: string, value: any) => {
     dispatch({ type: "UPDATE_FIELD", payload: { key, value } });
@@ -81,17 +144,74 @@ function App() {
     dispatch({ type: "UPDATE_NESTED_FIELD", payload: { path, value } });
   }, []);
 
-  const handleImport = useCallback((importedCharacter: CharacterSheet) => {
-    dispatch({ type: "SET_CHARACTER", payload: importedCharacter });
-    saveCharacterSheetToLocalStorage(importedCharacter);
+  const handleImport = useCallback(
+    (importedCharacter: CharacterSheet) => {
+      if (!activeSheetId) {
+        const newId = createNewCharacterSheet();
+        setActiveSheetId(newId);
+        dispatch({ type: "SET_CHARACTER", payload: importedCharacter });
+        saveCharacterSheetToLocalStorage(newId, importedCharacter);
+      } else {
+        dispatch({ type: "SET_CHARACTER", payload: importedCharacter });
+        saveCharacterSheetToLocalStorage(activeSheetId, importedCharacter);
+      }
+    },
+    [activeSheetId],
+  );
+
+  const handleSheetChange = useCallback(
+    (id: string) => {
+      if (id !== activeSheetId) {
+        setActiveSheetId(id);
+      }
+    },
+    [activeSheetId],
+  );
+
+  const handleSheetsUpdate = useCallback(() => {
+    // Force reload of active sheet
+    const sheetId = getActiveSheetId();
+    if (sheetId) {
+      const sheet = getCharacterSheetFromLocalStorage(sheetId);
+      if (sheet) {
+        setActiveSheetId(sheetId);
+        dispatch({ type: "SET_CHARACTER", payload: sheet });
+      }
+    }
+  }, []);
+
+  const handleSheetDeleted = useCallback(() => {
+    // Reload the new active sheet after deletion
+    const sheetId = getActiveSheetId();
+    if (sheetId) {
+      const sheet = getCharacterSheetFromLocalStorage(sheetId);
+      if (sheet) {
+        setActiveSheetId(sheetId);
+        dispatch({ type: "SET_CHARACTER", payload: sheet });
+      }
+    } else {
+      // No sheets left, create a new one
+      const newId = createNewCharacterSheet();
+      setActiveSheetId(newId);
+      dispatch({ type: "SET_CHARACTER", payload: EMPTY_CHARACTER });
+    }
   }, []);
 
   return (
     <>
+      <RemoveSheetButton
+        activeSheetId={activeSheetId}
+        onSheetDeleted={handleSheetDeleted}
+      />
       <div className="absolute top-4 left-4 flex gap-2 z-10">
         <ExportButton characterSheet={characterSheet} />
         <ImportButton onImport={handleImport} />
       </div>
+      <CharacterTabs
+        activeSheetId={activeSheetId}
+        onSheetChange={handleSheetChange}
+        onSheetsUpdate={handleSheetsUpdate}
+      />
       <h1 className="text-center text-xl mb-8 bg-[var(--background)] -m-7 px-6 w-fit mx-auto">
         <div className="uppercase text-5xl border-y w-fit mx-auto">Vampire</div>
         <div className="uppercase">The Masquerade</div>
