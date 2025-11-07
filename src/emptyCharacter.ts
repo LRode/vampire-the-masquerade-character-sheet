@@ -94,4 +94,8 @@ export const EMPTY_CHARACTER: CharacterSheet = {
   history: "",
   merits: [],
   flaws: [],
+  powerBonus: "",
+  mendAmount: "",
+  rouseReRoll: "",
+  feedingPenalty: "",
 };

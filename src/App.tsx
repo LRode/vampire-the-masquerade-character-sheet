@@ -11,6 +11,8 @@ import { Attributes } from "./sections/Attributes";
 import { Stats } from "./sections/Stats";
 import { Disciplines } from "./sections/Disciplines";
 import { Merits } from "./sections/Merits";
+import { TheBlood } from "./sections/TheBlood";
+import { Experience } from "./sections/Experience";
 
 type CharacterAction =
   | { type: "SET_CHARACTER"; payload: CharacterSheet }
@@ -133,6 +135,33 @@ function App() {
               field="flaws"
               updateField={updateNestedField}
             />
+          </div>
+        </section>
+
+        <section className="pt-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-4 md:gap-x-8 mb-3 gap-y-2">
+            <div className="lg:col-span-2">
+              <h2 className="uppercase border-b mb-4 text-center">The Blood</h2>
+              <TheBlood
+                bloodPotency={characterSheet.bloodPotency}
+                bloodSurge={characterSheet.bloodSurge}
+                baneSeverity={characterSheet.baneSeverity}
+                powerBonus={characterSheet.powerBonus}
+                mendAmount={characterSheet.mendAmount}
+                rouseReRoll={characterSheet.rouseReRoll}
+                feedingPenalty={characterSheet.feedingPenalty}
+                updateField={updateField}
+              />
+            </div>
+            <div>
+              <h2 className="uppercase border-b mb-4 text-center">
+                Experience
+              </h2>
+              <Experience
+                experience={characterSheet.experience}
+                updateNestedField={updateNestedField}
+              />
+            </div>
           </div>
         </section>
       </main>
